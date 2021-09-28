@@ -70,7 +70,7 @@ func PutFlag(gameID, row, column int) (model.Game, error) {
 
 func RemoveFlag(gameID, row, column int) (model.Game, error) {
 	game := games[gameID]
-	if game.Cells[row][column].IsFlagged {
+	if !game.Cells[row][column].IsFlagged {
 		return game, errors.New("this cell is not flagged")
 	}
 	game.Cells[row][column].IsFlagged = false
