@@ -3,9 +3,11 @@ package model
 import "time"
 
 type Game struct {
-	Rows      int       `json:"rows"`
-	Columns   int       `json:"columns"`
-	Mines     int       `json:"mines"`
-	Cells     [][]Cell  `json:"cells"`
-	StartTime time.Time `json:"startTime"`
+	ID         int       `json:"id"`
+	Rows       int       `json:"rows"`
+	Columns    int       `json:"columns"`
+	Mines      int       `json:"mines"`
+	StartTime  time.Time `json:"startTime"`
+	FinishTime time.Time `json:"finishTime"`
+	Cells      [][]Cell  `json:"cells"`
 }

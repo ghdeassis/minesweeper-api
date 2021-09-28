@@ -2,24 +2,37 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
+	"minesweeper-api/request"
 	"minesweeper-api/service"
 	"net/http"
 )
 
 func NewGame(c *gin.Context) {
-	request := NewGameRequest{}
-	if err := c.BindJSON(&request); err != nil {
+	req := request.NewGameRequest{}
+	if err := c.BindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	service.NewGame(request.Rows, request.Columns, request.Mines)
-
-	c.JSON(http.StatusOK, "")
+	c.JSON(http.StatusOK, service.NewGame(*req.Rows, *req.Columns, *req.Mines))
 }
 
-type NewGameRequest struct {
-	Rows    int `json:"rows" binding:"required"`
-	Columns int `json:"columns" binding:"required"`
-	Mines   int `json:"mines" binding:"required"`
+func PutFlag(c *gin.Context) {
+	req := request.FlagRequest{}
+	if err := c.BindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, service.PutFlag(*req.GameID, *req.Row, *req.Column))
+}
+
+func RemoveFlag(c *gin.Context) {
+	req := request.FlagRequest{}
+	if err := c.BindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, service.RemoveFlag(*req.GameID, *req.Row, *req.Column))
 }

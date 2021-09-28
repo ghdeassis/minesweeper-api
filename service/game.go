@@ -6,25 +6,30 @@ import (
 	"time"
 )
 
+var nextId = 0
 var games []model.Game
 
-func NewGame(rows, columns, mines int) {
+func NewGame(rows, columns, mines int) model.Game {
 	cells := make([][]model.Cell, rows)
 	for i := 0; i < rows; i++ {
 		cells[i] = make([]model.Cell, columns)
 	}
 
 	game := model.Game{
+		ID:        nextId,
 		Rows:      rows,
 		Columns:   columns,
 		Mines:     mines,
 		Cells:     cells,
 		StartTime: time.Now(),
 	}
+	nextId++
 
 	generateMines(game)
 
 	games = append(games, game)
+
+	return game
 }
 
 func generateMines(game model.Game) {
@@ -49,4 +54,16 @@ func generateMines(game model.Game) {
 			row++
 		}
 	}
+}
+
+func PutFlag(gameID, row, column int) model.Game {
+	game := games[gameID]
+	game.Cells[row][column].IsFlagged = true
+	return game
+}
+
+func RemoveFlag(gameID, row, column int) model.Game {
+	game := games[gameID]
+	game.Cells[row][column].IsFlagged = false
+	return game
 }

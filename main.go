@@ -13,6 +13,8 @@ func main() {
 	ginrouter := gin.Default()
 	ginrouter.Use(util.CORSMiddleware())
 	ginrouter.POST("/newGame", controller.NewGame)
+	ginrouter.POST("/putFlag", controller.PutFlag)
+	ginrouter.POST("/removeFlag", controller.RemoveFlag)
 	err := ginrouter.Run()
 	if err != nil {
 		log.Fatal(err)
