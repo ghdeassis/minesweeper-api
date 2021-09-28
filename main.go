@@ -15,6 +15,7 @@ func main() {
 	ginrouter.POST("/newGame", controller.NewGame)
 	ginrouter.POST("/putFlag", controller.PutFlag)
 	ginrouter.POST("/removeFlag", controller.RemoveFlag)
+	ginrouter.POST("/revealCell", controller.RevealCell)
 	err := ginrouter.Run()
 	if err != nil {
 		log.Fatal(err)
